@@ -1,6 +1,6 @@
 import apgApi from "apg-js/src/apg-api/api";
 import apgLib from "apg-js/src/apg-lib/node-exports";
-import { isEIP55Address, parseIntegerNumber } from "./utils";
+import { isKlaytnAddress, parseIntegerNumber } from "./utils";
 
 const GRAMMAR = `
 sign-in-with-ethereum =
@@ -345,7 +345,7 @@ export class ParsedMessage {
 			throw new Error("Domain cannot be empty.");
 		}
 
-		if (!isEIP55Address(this.address)) {
+		if (!isKlaytnAddress(this.address)) {
 			throw new Error("Address not conformant to EIP-55.");
 		}
 	}

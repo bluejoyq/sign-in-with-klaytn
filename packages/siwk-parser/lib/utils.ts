@@ -5,21 +5,17 @@ import { bytesToHex } from '@noble/hashes/utils';
  * @param address Address to be checked if conforms with EIP-55.
  * @returns Either the return is or not in the EIP-55 format.
  */
-export const isEIP55Address = (address: string) => {
+export const isKlaytnAddress = (address: string) => {
     if(address.length != 42) {
         return false;
     }
-
     const lowerAddress = `${address}`.toLowerCase().replace('0x', '');
     var hash = bytesToHex(keccak_256(lowerAddress));
     var ret = '0x';
-
     for (var i = 0; i < lowerAddress.length; i++) {
-        if (parseInt(hash[i], 16) >= 8) {
-            ret += lowerAddress[i].toUpperCase();
-        } else {
-            ret += lowerAddress[i];
-        }
+       
+        ret += lowerAddress[i];
+        
     }
     return address === ret;
 }

@@ -80,6 +80,9 @@ importers:
       apg-js:
         specifier: ^4.1.1
         version: 4.1.1
+      caver-js:
+        specifier: ^1.10.2
+        version: 1.10.2(node-fetch@2.6.11)
       uri-js:
         specifier: ^4.4.1
         version: 4.4.1

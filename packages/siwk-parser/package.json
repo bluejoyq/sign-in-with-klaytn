@@ -24,6 +24,7 @@
   "dependencies": {
     "@noble/hashes": "^1.1.2",
     "apg-js": "^4.1.1",
+    "caver-js": "^1.10.2",
     "uri-js": "^4.4.1",
     "valid-url": "^1.0.9"
   },
