@@ -1,9 +1,9 @@
 {
-  "name": "siwe",
+  "name": "@siwk/core",
   "version": "2.1.4",
   "description": "Sign-In with Ethereum",
-  "main": "dist/siwe.js",
-  "types": "dist/siwe.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/types.d.ts",
   "directories": {
     "lib": "lib"
   },
@@ -23,8 +23,9 @@
   ],
   "homepage": "https://github.com/spruceid/siwe",
   "dependencies": {
-    "@spruceid/siwe-parser": "*",
+    "@siwk/parser": "workspace:*",
     "@stablelib/random": "^1.0.1",
+    "caver-js": "^1.10.2",
     "uri-js": "^4.4.1",
     "valid-url": "^1.0.9"
   },

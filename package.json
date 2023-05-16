@@ -1,10 +1,7 @@
 {
-  "name": "siwe-root",
+  "name": "siwk",
+  "packageManager": "pnpm@8.5.1",
   "private": true,
-  "workspaces": [
-    "packages/siwe-parser",
-    "packages/siwe"
-  ],
   "scripts": {
     "build": "lerna run build",
     "test": "lerna run --stream test",

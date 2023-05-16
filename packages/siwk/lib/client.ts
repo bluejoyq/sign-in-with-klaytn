@@ -3,7 +3,7 @@ import {
   isEIP55Address,
   ParsedMessage,
   parseIntegerNumber,
-} from '@spruceid/siwe-parser';
+} from '@siwk/parser';
 import { providers } from 'ethers';
 import * as uri from 'valid-url';
 
