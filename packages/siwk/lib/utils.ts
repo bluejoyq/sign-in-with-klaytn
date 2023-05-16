@@ -2,7 +2,7 @@ import { randomStringForEntropy } from '@stablelib/random';
 import { Contract, providers, Signer } from 'ethers';
 
 import type { SiweMessage } from './client';
-import { hashMessage } from './ethersCompat';
+import { hashMessage } from './klaytnCompat';
 
 const EIP1271_ABI = ["function isValidSignature(bytes32 _message, bytes _signature) public view returns (bytes4)"];
 const EIP1271_MAGICVALUE = "0x1626ba7e";

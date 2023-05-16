@@ -1,13 +1,13 @@
 // TODO: Figure out how to get types from this lib:
 import {
-  isEIP55Address,
+  isKlaytnAddress,
   ParsedMessage,
   parseIntegerNumber,
 } from '@siwk/parser';
 import { providers } from 'ethers';
 import * as uri from 'valid-url';
 
-import { getAddress, verifyMessage } from './ethersCompat';
+import { verifyMessage } from './klaytnCompat';
 import {
   SiweError,
   SiweErrorType,
@@ -193,12 +193,12 @@ export class SiweMessage {
     params: VerifyParams,
     opts: VerifyOpts = { suppressExceptions: false }
   ): Promise<SiweResponse> {
-    return new Promise<SiweResponse>((resolve, reject) => {
+    
       const fail = result => {
         if (opts.suppressExceptions) {
-          return resolve(result);
+          return result;
         } else {
-          return reject(result);
+          return result;
         }
       };
 
@@ -278,7 +278,7 @@ export class SiweMessage {
           });
         }
       }
-      let EIP4361Message;
+      let EIP4361Message : string;
       try {
         EIP4361Message = this.prepareMessage();
       } catch (e) {
@@ -290,18 +290,15 @@ export class SiweMessage {
       }
 
       /** Recover address from signature */
-      let addr;
+      let res : boolean;
       try {
-        addr = verifyMessage(EIP4361Message, signature);
+        res = await verifyMessage(EIP4361Message, [signature],this.address);
       } catch (e) {
         console.error(e);
       }
       /** Match signature with message's address */
-      if (addr === this.address) {
-        return resolve({
-          success: true,
-          data: this,
-        });
+      if (res) {
+        return {success:true, data:this};
       } else {
         const EIP1271Promise = checkContractWalletSignature(this, signature, opts.provider)
           .then(isValid => {
@@ -311,7 +308,7 @@ export class SiweMessage {
                 data: this,
                 error: new SiweError(
                   SiweErrorType.INVALID_SIGNATURE,
-                  addr,
+                  'no',
                   `Resolved address to be ${this.address}`
                 ),
               };
@@ -335,21 +332,21 @@ export class SiweMessage {
         ]).then(([EIP1271Response, fallbackResponse]) => {
           if (fallbackResponse) {
             if (fallbackResponse.success) {
-              return resolve(fallbackResponse);
+              return fallbackResponse;
             } else {
               fail(fallbackResponse);
             }
           } else {
             if (EIP1271Response.success) {
-              return resolve(EIP1271Response);
+              return EIP1271Response;
             }
             else {
               fail(EIP1271Response);
             }
           }
         });
+      
       }
-    });
   }
 
   /**
@@ -378,10 +375,10 @@ export class SiweMessage {
     }
 
     /** EIP-55 `address` check. */
-    if (!isEIP55Address(this.address)) {
+    if (!isKlaytnAddress(this.address)) {
       throw new SiweError(
         SiweErrorType.INVALID_ADDRESS,
-        getAddress(this.address),
+        'no',
         this.address
       );
     }
